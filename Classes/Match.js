@@ -5,6 +5,7 @@ class Match{
     constructor() {
         this.connexion = database;
         this.resultat={};
+        this.code="";
       }
 
 /**
@@ -14,6 +15,7 @@ class Match{
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
 add(code_equipe_a, code_equipe_b, date_match){
+
     return new Promise((resolve, reject) => {
     const query = 'INSERT INTO matchs(code_equipe_a, code_equipe_b, date_match) VALUES(?, ?, ?)';
     this.connexion.query(query, [code_equipe_a, code_equipe_b, date_match], (err, results) => {
@@ -36,19 +38,20 @@ add(code_equipe_a, code_equipe_b, date_match){
                         
         });
      });
+
 }
 
 /**
  * Ajouter les scores d'un match
  * @param point_equipe_a - point de l'équipe A.
  * @param point_equipe_b - point de l'équipe B.
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-add_score(point_equipe_a, point_equipe_b, code_match){
+add_score(point_equipe_a, point_equipe_b, id_match){
     return new Promise((resolve, reject) => {
-        const query = 'UPDATE matchs SET point_equipe_a=?, point_equipe_b=?, WHERE code_match=?';
-        this.connexion.query(query, [code_equipe_a, code_equipe_b, date_match], (err, results) => {
+        const query = 'UPDATE matchs SET point_equipe_a=?, point_equipe_b=? WHERE id_match=?';
+        this.connexion.query(query, [point_equipe_a,  point_equipe_b, id_match], (err, results) => {
         
             if (err) {
     
@@ -73,7 +76,7 @@ add_score(point_equipe_a, point_equipe_b, code_match){
 /**
  * Ajouter les à une équipe. (utile pour le classement)
  * @param point - les point de l'équuipe pour un match.
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
 add_equipe_point(code_equipe, point){
@@ -106,14 +109,14 @@ add_equipe_point(code_equipe, point){
 /**
  * Ajouter les  statistiques d'un jouer
  * @param code_joueur - le code du joueur
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @param point_joueur - le point que le joueur  à optenu  pour le match
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-add_statitique(code_joueur, code_match, point_joueur){
+add_statitique(code_joueur, id_match, point_joueur){
 return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO statistiques(code_joueur, code_match, point_joueur) VALEUS(?,?, ?)';
-    this.connexion.query(query, [code_joueur, code_match, point_joueur], (err, results) => {
+    const query = 'INSERT INTO statistiques(code_joueur, id_match, point_joueur) VALUES(?,?, ?)';
+    this.connexion.query(query, [code_joueur, id_match, point_joueur], (err, results) => {
 
         if (err) {
 
@@ -140,13 +143,13 @@ return new Promise((resolve, reject) => {
 
 /**
  * Valider les prédictions pour un match lors de l'ajout des scor
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-validation_prediction(code_match){
+validation_prediction(id_match){
  return new Promise((resolve, reject) => {
-    const query = 'UPDATE utilisateurs SET point_prediction=point_prediction + ? WHERE code_utilisateur IN (SELECT code_utilisateur FROM predictions INNER JOIN matchs predictions.code_match=matchs.code_match WHERE matchs.code_match= ? AND predictions.point_equipe_a=matchs.point_equipe_a AND predictions.point_equipe_b=matchs.point_equipe_b)';
-    this.connexion.query(query, [10, code_match], (err, results) => {
+    const query = 'UPDATE utilisateurs SET point_prediction=point_prediction + ? WHERE code_utilisateur IN (SELECT code_utilisateur FROM predictions INNER JOIN matchs predictions.id_match=matchs.id_match WHERE matchs.id_match= ? AND predictions.point_equipe_a=matchs.point_equipe_a AND predictions.point_equipe_b=matchs.point_equipe_b)';
+    this.connexion.query(query, [10, id_match], (err, results) => {
         
     if (err) {
 
@@ -171,14 +174,14 @@ validation_prediction(code_match){
 
 /**
  * Récupérrer toute les informations ayant rapport  à un match
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-find(code_match){
+find(id_match){
     return new Promise((resolve, reject) => {
-        const query = 'SELECT matchs.*, a.*, b.* FROM matchs INNER JOIN equipes a ON matchs.code_equipe_a=a.code_equipe INNER JOIN equipes b ON matchs.code_equipe_b=b.code_equipe WHERE matchs.code_match=?';
-        this.connexion.query(query, [10, code_match], (err, results) => {
-            
+        const query = 'SELECT matchs.*, a.nom_equipe AS nom_a, b.nom_equipe AS nom_b FROM matchs INNER JOIN equipes a ON matchs.code_equipe_a=a.code_equipe INNER JOIN equipes b ON matchs.code_equipe_b=b.code_equipe WHERE matchs.id_match=?';
+        this.connexion.query(query, [id_match], (err, results) => {
+             
         if (err) {
     
             resolve({
@@ -190,7 +193,8 @@ find(code_match){
     
             resolve({
                 statut: true,
-                message: "Predictions validé avec success"
+                message: "Information match trouvé",
+                data : results
             }); 
         }
         this.connexion.end();
@@ -203,14 +207,14 @@ find(code_match){
 
 /**
  * Retrouver les statistiques et informations des joueurs d'une équipe pour un match
- * @param code_match - le code du match
+ * @param id_match - le code du match
  * @param code_equipe - le code de l'équipe
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-find_joueur_equip(code_match, code_equipe){
+find_joueur_equip(id_match, code_equipe){
     return new Promise((resolve, reject) => {
-        const query = 'SELECT joueurs.*, statistiques.* FROM joueurs LEFT JOIN statistiques ON joueurs.code_joueur=statistiques.code_joueur LEFT JOIN matchs ON statistiques.code_match=matchs.code_match WHERE matchs.code_match=? AND joueurs.code_equipe=?';
-        this.connexion.query(query, [code_match, code_equipe], (err, results) => {
+        const query = 'SELECT joueurs.*, statistiques.* FROM joueurs LEFT JOIN statistiques ON joueurs.code_joueur=statistiques.code_joueur INNER JOIN matchs ON statistiques.id_match=matchs.id_match WHERE matchs.id_match=? AND joueurs.code_equipe=?';
+        this.connexion.query(query, [id_match, code_equipe], (err, results) => {
             
         if (err) {
     
