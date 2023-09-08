@@ -36,4 +36,4 @@ password : 00000
 
 ### Screenshots
 You can see the screenshots in the dedicated folder
-<img src="screenshorts/OperaInstantan_2023-09-08_214510_localhost.png">
+<img src="screenshorts/OperaInstantané_2023-09-08_214510_localhost.png">
