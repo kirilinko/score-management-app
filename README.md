@@ -2,7 +2,7 @@
 ### Database relational schema
 <img src="screenshorts/Capture_2023-09-08 212727.png">
 
-### Module utilisé 
+### Module used 
 The application was implemented using the Nodejs runtime and the ExpressJs mini framework.
 
 The following modules are used:
@@ -21,6 +21,13 @@ The following modules are used:
 * Obtain information about a match (backend only)
   <b style="color:red">Unfinished project.</b>
 
+### Authentication
+Connection information
+
+username : kirilinko   
+password : 00000
+
+
 ### Start project
 
 *1* - First run the ``npm install`` command to install the necessary modules
@@ -29,4 +36,4 @@ The following modules are used:
 
 ### Screenshots
 You can see the screenshots in the dedicated folder
-<img src="screenshorts/OperaInstantane_2023-09-08_214510_localhost.png">
+<img src="screenshorts/OperaInstantan_2023-09-08_214510_localhost.png">
