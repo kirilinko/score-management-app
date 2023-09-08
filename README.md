@@ -27,6 +27,6 @@ The following modules are used:
 *2* - Then import the database into your database management system (phpmyadmin or mysql workbranch or others... )
 *3* - Then launch the project with ``npm start``.
 
-### capture d'écrant
+### Screenshots
 You can see the screenshots in the dedicated folder
 <img src="screenshorts/OperaInstantane_2023-09-08_214510_localhost.png">
