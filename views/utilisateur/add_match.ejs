@@ -49,10 +49,13 @@
  <section class="mt-2 container">
   <center class="mb-2 mt-4"><h4>  <i class="fa-solid fa-list"></i> List of matchs </h4></center>
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
       <% if(locals.equipes) { for (match of matchs) { %>
-        <div class="col-12 text-center " style="font-size: 18px;"> 
-          <%= match.nom_a %> VS <%= match.nom_b %> of <%= new Date(match.date_match).toLocaleDateString() %>
+        <div class="col-12 text-center " style="font-size: 18px; "> 
+          <b><%= match.nom_a %> VS <%= match.nom_b %> of <%= new Date(match.date_match).toLocaleDateString() %></b>
+          <% if(match.point_equipe_a) {%>
+            <div class="alert alert-success">Score : <%= match.nom_a %> (<%=match.point_equipe_a%>) <%= match.nom_b %> (<%=match.point_equipe_b%>) </div>  
+            <% } else{%>  <div class="alert alert-warning">Pending</div> <% }%> 
         </div>
       <% } } %>
     </div>

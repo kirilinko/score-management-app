@@ -26,7 +26,7 @@ user.use(function(requet, reponse, next) {
         });
     } else {
         appData["statut"] = false;
-        appData["message"] = "Absence de token dans la requête. Impossible d'accéder à cette ressource.";
+        appData["message"] = "Absence de token. Impossible d'accéder à cette ressource.";
         reponse.status(403).json(appData);
     }
 });
@@ -40,12 +40,13 @@ user.get('/addMatch', (requet,reponse)=>{
     .then((resultat) => {
         match.all()
         .then((resultat_match) => {
+            console.log(resultat_match.data)
             reponse.render('utilisateur/add_match',{'equipes':resultat.data, 'matchs':resultat_match.data})
          })
 
       })
       .catch((erreur) => {
-        console.error(erreur);
+        reponse.status(403).json(erreur);
       });
     
 })
@@ -60,7 +61,7 @@ user.post('/addMatch', (requet,reponse)=>{
 
       })
       .catch((erreur) => {
-        console.error(erreur);
+        reponse.status(403).json(erreur);
       });
     
 })
@@ -74,7 +75,7 @@ user.get('/addScore', (requet,reponse)=>{
        reponse.render('utilisateur/add_score',{'matchs':resultat.data})
       })
       .catch((erreur) => {
-        console.error(erreur);
+        reponse.status(403).json(erreur);
       });
  
 })
@@ -124,6 +125,11 @@ user.post('/addPrediction', (requet,reponse)=>{
 
 })
 
+user.get('/classement', (requet,reponse)=>{
+    
+    reponse.render('classement')
+
+})
 
 
 

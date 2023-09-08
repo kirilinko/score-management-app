@@ -10,23 +10,9 @@
   <title>Classement des équipes</title>
 </head>
 <body style="font-family: Montserrat;">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4" style="background: #054D7D!important;">
-    <div class="container-fluid">
-      <a class="navbar-brand"  style="color: white;" href="#">Score Management app</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-           
-          <a class="nav-link" href="/Connexion"  style="color: white;" ><i class="fa-solid fa-circle-user"></i> CONNEXION</a>
- 
-        </div>
-      </div>
-    </div>
-  </nav>
-  <center><span class="btn btn-warning mt-2 mb-4">Vous devez vous connectez pour faire des prédictions et ajouter des matchs</span></center> 
-<center class="mb-4"><h2>  <i class="fa-solid fa-star"></i>Equique ranking by score</h2></center>
+  <%-include('utilisateur/navbar')-%>
+  <center><span class="btn btn-warning mt-2 mb-4">You need to log in to make predictions and add matches</span></center> 
+<center class="mb-4"><h2>  <i class="fa-solid fa-star"></i>Team ranking by score</h2></center>
          
 <section class="container">
   <table class="table">
@@ -39,23 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
+ 
     </tbody>
   </table>
  </section>

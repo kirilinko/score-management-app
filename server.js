@@ -5,6 +5,7 @@ const
  mysql = require('mysql')
  app=express();
  session = require('express-session');
+ cookieParser = require('cookie-parser');
 
 // Routeurs 
 var indexRouter = require('./Routes/Index/Index');
@@ -17,7 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+app.use(cookieParser());
 app.use(session({
      secret: 'KIRI-UCHIWA',
      resave: false,
