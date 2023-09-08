@@ -15,34 +15,35 @@
 <center class="mb-4"><h2>  <i class="fa-solid fa-arrow-up-1-9"></i> Add score to a match</h2></center>
          
 <section class="container">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <label>Choose a match</label>
-        <select class="form-control" placeholder="First name" aria-label="First name">
-          <option>R</option>
-          <option>A</option>
-          <option>S</option>
-        </select>
+  <form method="post">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <label>Choose a match</label>
+          <select name="id_match" class="form-control" placeholder="First name" aria-label="First name">
+            <% for(match of matchs ) { %>
+              <option value="<%=match.id_match%>">Team (A) <%=match.nom_a%>  VS Team (B) <%=match.nom_b%>  of (<%=new Date(match.date_match).toLocaleDateString() %>)</option>    
+            <% } %>
+          </select>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <label><i class="fa fa-users" aria-hidden="true"></i> A team score</label>
+          <input type="text" name="teamA_score" class="form-control">
+        </div>
+        <div class="col-3">
+          <label><i class="fa fa-users" aria-hidden="true"></i> B team score</label>
+          <input type="text" name="teamB_score" class="form-control">
+        </div>
+      </div>
+      <div class="row justify-content-center mt-4">
+        <div class="col-6 text-center">
+          <button class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Add a score to the match</button>
+        </div>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-3">
-        <label><i class="fa fa-users" aria-hidden="true"></i> A team score</label>
-        <input type="text" class="form-control">
-      </div>
-      <div class="col-3">
-        <label><i class="fa fa-users" aria-hidden="true"></i> B team score</label>
-        <input type="text" class="form-control">
-      </div>
-    </div>
-    <div class="row justify-content-center mt-4">
-      <div class="col-6 text-center">
-        <button class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Add a score to the match</button>
-      </div>
-    </div>
-  </div>
-  
+  </form>
  </section>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

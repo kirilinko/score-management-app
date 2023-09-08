@@ -15,34 +15,36 @@
 <center class="mb-4"><h2>  <i class="fa-solid fa-medal"></i> Make a prediction </h2></center>
          
 <section class="container">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <label><i class="fa-solid fa-futbol"></i> Choose a match</label>
-        <select class="form-control" placeholder="First name" aria-label="First name">
-          <option>R</option>
-          <option>A</option>
-          <option>S</option>
-        </select>
+  <form method="post">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <label><i class="fa-solid fa-futbol"></i> Choose a match</label>
+          <select name="id_match" class="form-control" >
+            <% for(match of matchs ) { %>
+              <option value="<%=match.id_match%>">Team (A) <%=match.nom_a%>  VS Team (B) <%=match.nom_b%>  of (<%=new Date(match.date_match).toLocaleDateString() %>)</option>    
+            <% } %>
+          </select>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <label><i class="fa fa-users" aria-hidden="true"></i> Predict the score for team A</label>
+          <input type="text" name="teamA_score" class="form-control">
+        </div>
+        <div class="col-3">
+          <label><i class="fa fa-users" aria-hidden="true"></i> Predict the score for team B</label>
+          <input type="text" name="teamB_score" class="form-control">
+        </div>
+      </div>
+      <div class="row justify-content-center mt-4">
+        <div class="col-6 text-center">
+          <button class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Making a prediction</button>
+        </div>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-3">
-        <label><i class="fa fa-users" aria-hidden="true"></i> Predict the score for team A</label>
-        <input type="text" class="form-control">
-      </div>
-      <div class="col-3">
-        <label><i class="fa fa-users" aria-hidden="true"></i> Predict the score for team B</label>
-        <input type="text" class="form-control">
-      </div>
-    </div>
-    <div class="row justify-content-center mt-4">
-      <div class="col-6 text-center">
-        <button class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Making a prediction</button>
-      </div>
-    </div>
-  </div>
-  
+  </form>
+
  </section>
 
  <section class="mt-2">

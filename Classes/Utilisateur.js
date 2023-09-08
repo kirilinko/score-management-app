@@ -38,7 +38,7 @@ connecter(username, password) {
                         message: "Nom d'utilisateur ou mot de passe incorrect"
                     }); 
                 }
-                this.connexion.end();
+                 
             });
 
         } else {
@@ -48,7 +48,7 @@ connecter(username, password) {
                 message: "Nom d'utilisateur inexistant"
             }); 
 
-            this.connexion.end();
+            
         }
     });
  });
@@ -62,17 +62,16 @@ connecter(username, password) {
  * @param codeUtilisateur - code de l'utilisateur qui veux faire la prédiction
  * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
  */
-prediction(codeMatch, point_eA, point_eB, codeUtilisateur) {
+prediction(id_match, point_eA, point_eB, codeUtilisateur) {
   return new Promise((resolve, reject) => {
-    const query = 'INSERT INTO prediction(code_match, point_equipe_a, point_equipe_b, code_utilisateur )  VALUES(?, ?, ?, ?)';
-    this.connexion.query(query, [codeMatch, point_eA, point_eB, codeUtilisateur], (err, results) => {
+    const query = 'INSERT INTO predictions(id_match, point_equipe_a, point_equipe_b, code_utilisateur )  VALUES(?, ?, ?, ?)';
+    this.connexion.query(query, [id_match, point_eA, point_eB, codeUtilisateur], (err, results) => {
 
         if (err) {
-    
+           console.log(err)
             resolve({
                 statut: false,
                 message: "Une erreur est survenu lors de la prédiction",
-                token: token
             });  
 
         } else {
@@ -82,11 +81,13 @@ prediction(codeMatch, point_eA, point_eB, codeUtilisateur) {
                 message: "Prédiction éffectué avec success"
             }); 
         }
-        this.connexion.end();
+      
 
     });
  });
 }
+
+
 
 
 

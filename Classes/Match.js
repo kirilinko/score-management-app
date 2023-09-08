@@ -34,7 +34,7 @@ add(code_equipe_a, code_equipe_b, date_match){
                 message: "Macht entre les deux équipes créé avec succès"
             }); 
         }
-        this.connexion.end();
+        
                         
         });
      });
@@ -67,7 +67,7 @@ add_score(point_equipe_a, point_equipe_b, id_match){
                     message: "Score ajouter avec success"
                 }); 
             }
-            this.connexion.end();
+             
                             
             });
          });
@@ -97,9 +97,7 @@ add_equipe_point(code_equipe, point){
                     statut: true,
                     message: "Point correctement ajouté"
                 }); 
-            }
-            
-            this.connexion.end();
+            }       
                             
            });
       });
@@ -133,8 +131,7 @@ return new Promise((resolve, reject) => {
             }); 
         }
         
-        this.connexion.end();
-                        
+    
        });
   });
 
@@ -165,7 +162,7 @@ validation_prediction(id_match){
             message: "Predictions validé avec success"
         }); 
     }
-    this.connexion.end();
+   
                     
     });
  });
@@ -197,7 +194,7 @@ find(id_match){
                 data : results
             }); 
         }
-        this.connexion.end();
+      
                         
         });
      });
@@ -231,13 +228,99 @@ find_joueur_equip(id_match, code_equipe){
                 data: results
             }); 
         }
-        this.connexion.end();
+         
                         
         });
      });
 
 }
 
+
+/**
+ * Liste des matchs ou aucun score n'a été reseigné
+ * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
+ */
+all_match_without_score(){
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT matchs.*, a.nom_equipe AS nom_a, b.nom_equipe AS nom_b FROM matchs INNER JOIN equipes a ON matchs.code_equipe_a=a.code_equipe INNER JOIN equipes b ON matchs.code_equipe_b=b.code_equipe WHERE point_equipe_a IS NULL OR point_equipe_b IS NULL';
+        this.connexion.query(query, [], (err, results) => {
+    
+            if (err) {
+    
+                resolve({
+                    statut: false,
+                    message: `Une erreur est survenue lors la récupération des matchs`,
+                });  
+    
+            } else {
+    
+                resolve({
+                    statut: true,
+                    message: "Récupération correctement efectué",
+                    data:results
+                }); 
+            }       
+                            
+           });
+      });
+
+}
+
+/**
+ * Liste de touts les matchs 
+ * @returns {Promise} Une promesse qui résout avec un objet contenant le statut et un message.
+ */
+all(){
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT matchs.*, a.nom_equipe AS nom_a, b.nom_equipe AS nom_b FROM matchs INNER JOIN equipes a ON matchs.code_equipe_a=a.code_equipe INNER JOIN equipes b ON matchs.code_equipe_b=b.code_equipe';
+        this.connexion.query(query, [], (err, results) => {
+    
+            if (err) {
+    
+                resolve({
+                    statut: false,
+                    message: `Une erreur est survenue lors la récupération des matchs`,
+                });  
+    
+            } else {
+    
+                resolve({
+                    statut: true,
+                    message: "Récupération correctement efectué",
+                    data:results
+                }); 
+            }       
+                            
+           });
+      });
+
+}
+
+
+user_prediction(code_user){
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT matchs.*, a.nom_equipe AS nom_a, b.nom_equipe AS nom_b, predictions.* FROM matchs INNER JOIN predictions ON matchs.id_match=predictions.id_match INNER JOIN equipes a ON matchs.code_equipe_a=a.code_equipe INNER JOIN equipes b ON matchs.code_equipe_b=b.code_equipe WHERE predictions.code_utilisateur=?';
+        this.connexion.query(query, [code_user], (err, results) => {
+    
+            if (err) {
+    
+                resolve({
+                    statut: false,
+                    message: `Une erreur est survenue lors la récupération des prédictions de l'utilisateur`,
+                });  
+    
+            } else {
+    
+                resolve({
+                    statut: true,
+                    message: "Récupération correctement efectué",
+                    data:results
+                }); 
+            }       
+                            
+           });
+      });
+}
 
 }
 
